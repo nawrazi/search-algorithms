@@ -10,7 +10,6 @@ class Util:
 
         return data[2:]
 
-
     @staticmethod
     def generate(items=10):
         with open('data/data.txt', 'w') as file:
