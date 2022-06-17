@@ -12,11 +12,12 @@ class FileUtil:
     def readFile(path='data/data.txt'):
         items = []
         with open(path, 'r') as file:
-            for line in file.readlines()[2:]:
+            capacity = int(file.readline())
+            for line in file.readlines()[1:]:
                 name, weight, value = line.strip().split(',')
                 items.append(Item(name, weight, value))
 
-        return items
+        return capacity, items
 
     @staticmethod
     def generate(items=10):
