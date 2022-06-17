@@ -1,7 +1,5 @@
 class SimulatedAnnealing:
-    def __init__(self, temperature=2):
-        self.temperature = temperature
-        self.optimum = float('-inf')
+    def __init__(self):
         ...
 
     def getRandomSolution(self):
@@ -12,5 +10,3 @@ class SimulatedAnnealing:
 
     def solve(self):
         ...
-
-

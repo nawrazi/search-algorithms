@@ -1,14 +1,22 @@
 from random import random, randint
 
-class Util:
+class Item:
+    def __init__(self, name, weight, value):
+        self.name = name
+        self.weight = float(weight)
+        self.value = float(value)
+
+
+class FileUtil:
     @staticmethod
     def readFile(path='data/data.txt'):
-        data = []
+        items = []
         with open(path, 'r') as file:
-            for line in file.readlines():
-                data.append(line.strip().split(','))
+            for line in file.readlines()[2:]:
+                name, weight, value = line.strip().split(',')
+                items.append(Item(name, weight, value))
 
-        return data[2:]
+        return items
 
     @staticmethod
     def generate(items=10):
@@ -19,8 +27,3 @@ class Util:
                 file.write(f'item{i + 1},')
                 file.write('{:.1f}'.format(0.1 + random() * items / 2))
                 file.write(f',{randint(2 * items, 100 * items)}\n')
-
-
-# if __name__ == '__main__':
-#     Util.generate(15)
-#     Util.readFile()

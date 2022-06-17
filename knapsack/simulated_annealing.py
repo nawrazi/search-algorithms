@@ -1,5 +1,8 @@
+from util import *
+
 class SimulatedAnnealing:
-    def __init__(self, temperature=2):
+    def __init__(self, temperature):
+        self.items = None
         self.temperature = temperature
         self.optimum = float('-inf')
         ...
@@ -10,7 +13,12 @@ class SimulatedAnnealing:
     def getProbability(self, ):
         ...
 
-    def solve(self):
+    def solve(self, items):
+        self.items = items
         ...
 
 
+# if __name__ == '__main__':
+#     FileUtil.generate()
+#     algo = SimulatedAnnealing(2)
+#     algo.solve(FileUtil.readFile())
