@@ -1,0 +1,12 @@
+165
+item,weight,value
+item1,23,92
+item2,31,57
+item3,29,49
+item4,44,68
+item5,53,60
+item6,38,43
+item7,63,67
+item8,85,84
+item9,89,87
+item10,82,72
