@@ -3,8 +3,6 @@ from collections import defaultdict
 class Node:
     def __init__(self, val):
         self.val = val
-        self.long = 0
-        self.lat = 0
 
 class Edge:
     def __init__(self, head, tail, weight, directed=False):
@@ -19,7 +17,6 @@ class Graph:
         self.edges = defaultdict(list)
 
         self.buildGraphFromFile(path)
-        # self.setLocationsFromFile()
 
     def addNode(self, node):
         self.nodes[node.val] = node
@@ -46,15 +43,5 @@ class Graph:
 
         for node1, node2, weight in data:
             self.addEdge(Edge(Node(node1), Node(node2), int(weight)))
-
-        file.close()
-
-    def setLocationsFromFile(self, path="data/location_data.txt"):
-        file = open(path, "r")
-        data = [line.strip().split() for line in file.readlines()]
-
-        for val, lat, long in data:
-            self.nodes[val].long = float(long)
-            self.nodes[val].lat = float(lat)
 
         file.close()
