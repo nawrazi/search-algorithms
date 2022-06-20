@@ -3,7 +3,7 @@ import random
 import numpy
 
 class SimulatedAnnealing:
-    def __init__(self, temperature):
+    def __init__(self, temperature=10):
         self.temperature = temperature
         self.cooldown_rate = 0.98
         self.sack_capacity = None
@@ -45,7 +45,8 @@ class SimulatedAnnealing:
                 self.optimum_value = next_val
                 self.optimum_weight = next_weight
 
-            self.temperature *= self.cooldown_rate
+            if self.temperature > 0.0001:
+                self.temperature *= self.cooldown_rate
 
     def solve(self, sack_capacity, all_items):
         self.all_items = all_items
@@ -59,7 +60,7 @@ class SimulatedAnnealing:
 
 if __name__ == '__main__':
     # FileUtil.generate(15)
-    algo = SimulatedAnnealing(2)
+    algo = SimulatedAnnealing()
     capacity, items = FileUtil.readFile()
     algo.solve(capacity, items)
 
