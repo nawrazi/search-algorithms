@@ -12,15 +12,15 @@ if __name__ == '__main__':
 
     if args.algorithm == 'ga':
         print('Solving with Genetic Algorithm...')
-        print('GENETIC ALGORITHM: NOT IMPLEMENTED YET')
+        print('GENETIC ALGORITHM NOT IMPLEMENTED YET')
 
     elif args.algorithm == 'hc':
         print('Solving with Hill Climbing Algorithm...')
-        print('HILL CLIMBING NOT: IMPLEMENTED YET')
+        print('HILL CLIMBING NOT IMPLEMENTED YET')
 
     elif args.algorithm == 'sa':
         print('Solving with Simulated Annealing Algorithm...')
         solution = SimulatedAnnealing().solve(graph)
 
     else:
-        raise Exception(f'Invalid Algorithm: {args.algorithm}\n Please use ga, hc or sa')
+        raise Exception(f'Invalid Algorithm: {args.algorithm}')
