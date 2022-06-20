@@ -1,4 +1,3 @@
-from util import FileUtil, Item
 import random
 import numpy
 
@@ -57,11 +56,3 @@ class SimulatedAnnealing:
         print(f'Sack weight: {self.optimum_weight}')
 
         return self.optimum_value
-
-
-if __name__ == '__main__':
-    # FileUtil.generate(15)
-    algo = SimulatedAnnealing()
-    capacity, items = FileUtil.readFile()
-    algo.solve(capacity, items)
-

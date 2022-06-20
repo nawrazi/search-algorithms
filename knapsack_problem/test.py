@@ -21,7 +21,7 @@ def total_value_size(packing, values, sizes, max_size):
         if packing[i] == 1:
             v += values[i]
             s += sizes[i]
-    if s > max_size:  # too big to fit in knapsack
+    if s > max_size:  # too big to fit in knapsack_problem
         v = 0.0
     return v, s
 
@@ -79,7 +79,7 @@ def solve(n_items, rnd, values, sizes, max_size, max_iter, start_temperature, al
 
 
 def main():
-    # print("\nBegin knapsack simulated annealing demo ")
+    # print("\nBegin knapsack_problem simulated annealing demo ")
     # print("Goal is to maximize value subject to max size constraint ")
 
     values = np.array([79, 32, 47, 18, 26, 85, 33, 40, 45, 59])

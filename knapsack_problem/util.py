@@ -9,7 +9,7 @@ class Item:
 
 class FileUtil:
     @staticmethod
-    def readFile(path='data/data.txt'):
+    def readFile(path):
         items = []
         with open(path, 'r') as file:
             capacity = int(file.readline())

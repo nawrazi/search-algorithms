@@ -1,6 +1,5 @@
 import random
 import numpy
-from graph import Graph
 
 class SimulatedAnnealing:
     def __init__(self, temperature=10):
@@ -48,11 +47,7 @@ class SimulatedAnnealing:
         self.graph = graph
         self.simulate()
 
+        print(f'optimal path: {self.cur_path}')
+        print(f'distance: {self.shortest_distance}')
+
         return self.shortest_distance
-
-
-if __name__ == '__main__':
-    grp = Graph('data/graph_data.txt')
-    algo = SimulatedAnnealing()
-
-    print(algo.solve(grp))

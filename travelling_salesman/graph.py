@@ -19,7 +19,7 @@ class Graph:
         self.edges = defaultdict(list)
 
         self.buildGraphFromFile(path)
-        self.setLocationsFromFile()
+        # self.setLocationsFromFile()
 
     def addNode(self, node):
         self.nodes[node.val] = node
@@ -58,7 +58,3 @@ class Graph:
             self.nodes[val].lat = float(lat)
 
         file.close()
-
-
-if __name__ == '__main__':
-    graph = Graph("data/graph_data.txt")
