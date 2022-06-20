@@ -8,6 +8,8 @@ class SimulatedAnnealing:
         self.sack_capacity = None
         self.all_items = []
         self.cur_sack = []
+        self.cur_value = 0
+        self.cur_weight = 0
         self.optimum_value = 0
         self.optimum_weight = 0
 
@@ -32,24 +34,32 @@ class SimulatedAnnealing:
 
     def simulate(self):
         self.cur_sack = [1 for _ in range(len(self.all_items))]
-        self.optimum_value, self.optimum_weight = self.getValue(self.cur_sack)
+        self.cur_value, self.cur_weight = self.getValue(self.cur_sack)
 
-        for i in range(10_000):
+        for i in range(100):
             next_sack = self.getRandomSolution()
             next_val, next_weight = self.getValue(next_sack)
-            diff = next_val - self.optimum_value
+            diff = next_val - self.cur_value
 
             if diff > 0 or self.isLikely(diff):
                 self.cur_sack = next_sack
-                self.optimum_value = next_val
-                self.optimum_weight = next_weight
+                self.cur_value = next_val
+                self.cur_weight = next_weight
+
+                self.optimum_value = max(self.cur_value, self.optimum_value)
+                self.optimum_weight = max(self.cur_weight, self.optimum_weight)
 
             self.temperature *= self.cooldown_rate
 
     def solve(self, sack_capacity, all_items):
         self.all_items = all_items
         self.sack_capacity = sack_capacity
-        self.simulate()
+        # self.simulate()
+
+        for _ in range(1000):
+            self.simulate()
+            self.optimum_value = max(self.cur_value, self.optimum_value)
+            self.optimum_weight = max(self.cur_weight, self.optimum_weight)
 
         print(f'Selections: {self.cur_sack}')
         print(f'Sack value: {self.optimum_value}')
