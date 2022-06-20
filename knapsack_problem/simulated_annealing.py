@@ -1,14 +1,15 @@
-from util import FileUtil, Item
 import random
 import numpy
 
 class SimulatedAnnealing:
-    def __init__(self, temperature):
+    def __init__(self, temperature=10):
         self.temperature = temperature
         self.cooldown_rate = 0.98
         self.sack_capacity = None
         self.all_items = []
         self.cur_sack = []
+        self.cur_value = 0
+        self.cur_weight = 0
         self.optimum_value = 0
         self.optimum_weight = 0
 
@@ -33,39 +34,35 @@ class SimulatedAnnealing:
 
     def simulate(self):
         self.cur_sack = [1 for _ in range(len(self.all_items))]
-        self.optimum_value, self.optimum_weight = self.getValue(self.cur_sack)
+        self.cur_value, self.cur_weight = self.getValue(self.cur_sack)
 
-        for i in range(10_000):
+        for i in range(100):
             next_sack = self.getRandomSolution()
             next_val, next_weight = self.getValue(next_sack)
-            diff = next_val - self.optimum_value
+            diff = next_val - self.cur_value
 
             if diff > 0 or self.isLikely(diff):
                 self.cur_sack = next_sack
-                self.optimum_value = next_val
-                self.optimum_weight = next_weight
+                self.cur_value = next_val
+                self.cur_weight = next_weight
+
+                self.optimum_value = max(self.cur_value, self.optimum_value)
+                self.optimum_weight = max(self.cur_weight, self.optimum_weight)
 
             self.temperature *= self.cooldown_rate
 
     def solve(self, sack_capacity, all_items):
         self.all_items = all_items
         self.sack_capacity = sack_capacity
-        self.simulate()
+        # self.simulate()
+
+        for _ in range(1000):
+            self.simulate()
+            self.optimum_value = max(self.cur_value, self.optimum_value)
+            self.optimum_weight = max(self.cur_weight, self.optimum_weight)
 
         print(f'Selections: {self.cur_sack}')
         print(f'Sack value: {self.optimum_value}')
         print(f'Sack weight: {self.optimum_weight}')
 
-
-if __name__ == '__main__':
-    # FileUtil.generate(15)
-    algo = SimulatedAnnealing(2)
-    capacity, items = FileUtil.readFile()
-    algo.solve(capacity, items)
-
-    # test_vals = [79, 32, 47, 18, 26, 85, 33, 40, 45, 59]
-    # test_weights = [85, 26, 48, 21, 22, 95, 43, 45, 55, 52]
-    #
-    # test_items = [Item('test', w, v) for w, v in zip(test_vals, test_weights)]
-    # # algo.solve(sum(test_weights), test_items)
-    # # algo.solve(101, test_items)
+        return self.optimum_value

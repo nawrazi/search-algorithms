@@ -1,5 +1,4 @@
 import random
-from util import FileUtil
 
 class Chromosome:
     # accepts size of chromosome and 
@@ -35,11 +34,14 @@ class Population:
 class GeneticAlgo:
     def __init__(self) -> None:
         self.mutationPerc = 40
-        self.capacity,self.items = FileUtil.readFile()
+
+    def solve(self , items , capacity):
+        self.capacity = capacity
+        self.items = items
         self.population = Population(len(self.items),6)
         self.best = (0,None)
         self.main()
-       
+
     #returns  the fittest chromosome and its fitness
     def fittest(self) -> tuple:
         fittest = None
@@ -48,7 +50,6 @@ class GeneticAlgo:
             if self.population.chromosomes[i].fitness(self.items,self.capacity) >fitness:
                 fitness =  self.population.chromosomes[i].fitness(self.items , self.capacity)
                 fittest = self.population.chromosomes[i]
-        
         return (fitness ,fittest)
 
     #returns two possible parents for the next generation
@@ -115,7 +116,7 @@ class GeneticAlgo:
                 self.population.chromosomes[k] = offspring
             fittest = self.fittest()
             self.best = (fittest[0],fittest[1]) if fittest[0] > self.best[0] else self.best
-            # print("Generation:", generationNo ," optimal solution ==>", fittest[0])
+            
             generationNo += 1
         
         
@@ -124,10 +125,5 @@ class GeneticAlgo:
         print("Value    ====>",self.best[0])
         
 
-        
-
-
-if __name__ == "__main__" :  
-    # FileUtil.generate()    
-    GeneticAlgo()
+    
     
