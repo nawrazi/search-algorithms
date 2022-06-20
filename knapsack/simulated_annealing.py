@@ -45,8 +45,7 @@ class SimulatedAnnealing:
                 self.optimum_value = next_val
                 self.optimum_weight = next_weight
 
-            if self.temperature > 0.0001:
-                self.temperature *= self.cooldown_rate
+            self.temperature *= self.cooldown_rate
 
     def solve(self, sack_capacity, all_items):
         self.all_items = all_items
@@ -57,6 +56,8 @@ class SimulatedAnnealing:
         print(f'Sack value: {self.optimum_value}')
         print(f'Sack weight: {self.optimum_weight}')
 
+        return self.optimum_value
+
 
 if __name__ == '__main__':
     # FileUtil.generate(15)
@@ -64,9 +65,3 @@ if __name__ == '__main__':
     capacity, items = FileUtil.readFile()
     algo.solve(capacity, items)
 
-    # test_vals = [79, 32, 47, 18, 26, 85, 33, 40, 45, 59]
-    # test_weights = [85, 26, 48, 21, 22, 95, 43, 45, 55, 52]
-    #
-    # test_items = [Item('test', w, v) for w, v in zip(test_vals, test_weights)]
-    # # algo.solve(sum(test_weights), test_items)
-    # # algo.solve(101, test_items)
