@@ -22,9 +22,9 @@ class Chromosome:
     # accepts list of items availabe and returns the fitness(total) value of a chromo
     def fitness(self,graph) -> int:
         value = 0
-        leng = len(self.genes[0])
+        leng = len(self.genes)
         for i in range(len(self.genes)):
-            if (self.genes[(i) % leng] , self.genes[(i + 1) % leng]) in graph.all_distances:
+            if (self.genes[i % leng] , self.genes[(i + 1) % leng]) in graph.all_distances:
                 value += graph.all_distances[(self.genes[(i) % leng] , self.genes[(i + 1) % leng])]
             else:
                 value += graph.all_distances[(self.genes[(i + 1) % leng] , self.genes[(i) % leng])]
@@ -66,16 +66,19 @@ class GeneticAlgo:
         prnt2copy = Chromosome(self.cities)
         prnt1copy.genes = parent1.genes.copy()
         prnt2copy.genes = parent2.genes.copy()
-        crpnt1 = random.randint(0 , len(parent1.genes) // 2)
-        crpnt2 = random.randint(crpnt1 + 1, len(parent1.genes) - 1)
-        for i in range(crpnt1 , crpnt2):
+        crpnt1 = random.randint(0 , len(parent1.genes))
+        segment1 = [parent1.genes[i] for i in range(crpnt1 , len(parent1.genes))]
+        segment2 = [parent2.genes[i] for i in range(crpnt1 , len(parent2.genes))]
+        segment1.reverse()
+        segment2.reverse()
+        for i in range(crpnt1 , len(parent1.genes)):
             prnt2copy.genes.remove(parent1.genes[i])
-        for i in range(crpnt1 ,crpnt2):
-            prnt2copy.genes.append(parent1.genes[i])
-        for i in range(crpnt1 , crpnt2):
-            prnt2copy.genes.remove(parent2.genes[i])
-        for i in range(crpnt1 , crpnt2 ):
-            prnt2copy.genes.append(parent2.genes[i])
+        for i in range(len(segment1)):
+            prnt2copy.genes.append(segment1[i])
+        for i in range(crpnt1 , len(parent2.genes)):
+            prnt1copy.genes.remove(parent2.genes[i])
+        for i in range(len(segment2) ):
+            prnt1copy.genes.append(segment2[i])
         if prnt1copy.fitness(self.graph) <= prnt2copy.fitness(self.graph):
             return prnt1copy
         else:
@@ -84,7 +87,8 @@ class GeneticAlgo:
     def mutation(self , chromosome) -> None:
         temp = random.randint(0,100)
         if temp <= self.mutationPerc:
-            self.rndmSwap(chromosome.genes)
+            for i in range(len(chromosome.genes)//4):
+                self.rndmSwap(chromosome.genes)
     def rndmSwap(self , lst) -> None:
         idx1 = random.randint(0 , len(lst) - 1)
         idx2 = random.randint(0 , len(lst) - 1)
@@ -94,7 +98,7 @@ class GeneticAlgo:
     def main(self) -> None:
         best = float('inf')
         generationNo = 1
-        for i in range(2000):
+        for i in range(2000000):
             for k in range(len(self.population.chromosomes)):
                 parent1 , parent2 = self.selection()
                 offspring = self.crossover(parent1=parent1 , parent2= parent2)
@@ -102,9 +106,9 @@ class GeneticAlgo:
                 self.population.chromosomes[k] = offspring
             fittest = self.fittest()
             self.best = (fittest[0] , fittest[1]) if fittest[0] < self.best[0] else self.best
-            print("Generation :",generationNo , "optimal Solution ====> " , fittest[0])
+            # print("Generation :",generationNo , "optimal Solution ====> " , fittest[0])
             generationNo += 1
-        print("best =====> " , self.best[0])            
-graph = Graph("graph_data.txt")
-solution = GeneticAlgo().solve(graph)
+        print("value =====> " , self.best[0])
+        print("best =====> " , self.best[1].genes , )   
+
     
