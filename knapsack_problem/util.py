@@ -28,3 +28,4 @@ class FileUtil:
                 file.write(f'item{i + 1},')
                 file.write('{:.1f}'.format(0.1 + random() * items / 2))
                 file.write(f',{randint(2 * items, 100 * items)}\n')
+

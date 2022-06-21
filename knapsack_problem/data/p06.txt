@@ -1,0 +1,9 @@
+170
+item    , weight, value
+Table   , 41    , 442
+Sausages, 50    , 525
+Gloves  , 49    , 511
+Fish    , 59    , 593
+Bacon   , 55    , 546
+Shoes   , 57    , 564
+Computer, 60    , 617

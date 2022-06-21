@@ -1,0 +1,9 @@
+50
+item    , weight, value
+Mouse   , 31    , 70
+Pizza   , 10    , 20
+Chicken , 20    , 39
+Salad   , 19    , 37
+Tuna    , 4     , 7
+Soap    , 3     , 5
+Computer, 6     , 10
