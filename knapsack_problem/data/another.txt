@@ -1,0 +1,12 @@
+165
+item    , weight, value
+Table   , 23    , 92
+Computer, 31    , 57
+Chips   , 29    , 49
+Keyboard, 44    , 68
+Fish    , 53    , 60
+Pants   , 38    , 43
+Towels  , 63    , 67
+Gloves  , 85    , 84
+Mouse   , 89    , 87
+Car     , 82    , 72

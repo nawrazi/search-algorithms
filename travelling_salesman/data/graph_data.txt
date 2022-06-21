@@ -13,7 +13,7 @@ Pitesti     Rimnicu-Vilcea     97
 Pitesti     Craiova     138
 Rimnicu-Vilcea     Craiova     146
 Pitesti     Bucharest     101
-Bucharest     Fagaras     211
+Bucharest     Fagaras       211
 Giurgiu     Bucharest     90
 Urziceni     Bucharest     85
 Hirsova     Urziceni     98
