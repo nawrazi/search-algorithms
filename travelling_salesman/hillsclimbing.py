@@ -28,7 +28,10 @@ class TravelsMan:
         total_distance = 0
 
         for i in range(1, len(path)):
-            total_distance += dijkstra(self.graph, path[i-1], path[i])
+            if (path[i-1], path[i]) in self.graph.all_distances:
+                total_distance += self.graph.all_distances[(path[i-1], path[i])]
+            else:
+                total_distance += self.graph.all_distances[(path[i],path[i-1])]
         
         return total_distance
 
@@ -100,11 +103,12 @@ class TravelsMan:
 
 
 graph = Graph('data/graph_data.txt')
+graph.findAllDistances()
 obj = TravelsMan()
 
 # dijkstra(graph, "Bucharest", "Vaslui")
 mina = float('inf')
-for i in range(20):
+for i in range(1):
 
     na = obj.solve(graph)
     print(na)
