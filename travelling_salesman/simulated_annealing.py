@@ -29,21 +29,16 @@ class SimulatedAnnealing:
 
     def getRandomSolution(self):
         path = self.cur_path.copy()
-
-        if random.randint(0, 1):
-            idx = random.randint(1, len(path) - 2)
-            path[0] = path[idx]
-            path[idx] = path[-1]
-            path[-1] = path[0]
-        else:
-            idx1, idx2 = random.randint(1, len(path) - 2), random.randint(1, len(path) - 2)
-            path[idx1], path[idx2] = path[idx2], path[idx1]
-
+        idx1, idx2 = random.randint(1, len(path) - 2), random.randint(1, len(path) - 2)
+        path[idx1], path[idx2] = path[idx2], path[idx1]
         return path
 
-    def simulate(self):
-        cities = list({city for city in self.graph.nodes.keys()})
-        self.cur_path = cities + [cities[0]]
+    def simulate(self, initial):
+        if not initial:
+            cities = list({city for city in self.graph.nodes.keys()})
+            initial = cities + [cities[0]]
+
+        self.cur_path = initial
         self.cur_distance = self.getPathLength(self.cur_path)
 
         for i in range(100):
@@ -64,7 +59,7 @@ class SimulatedAnnealing:
         graph.findAllDistances()
 
         for _ in range(100):
-            self.simulate()
+            self.simulate(self.cur_path)
             self.shortest_distance = min(self.cur_distance, self.shortest_distance)
 
         print(f"Optimal Path: {' -> '.join(self.cur_path)}")
