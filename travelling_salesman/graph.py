@@ -1,4 +1,5 @@
 from collections import defaultdict
+import heapq
 
 class Node:
     def __init__(self, val):
@@ -45,3 +46,34 @@ class Graph:
             self.addEdge(Edge(Node(node1), Node(node2), int(weight)))
 
         file.close()
+
+
+
+def dijkstraCentrality(graph, start, target) -> int:
+    if start not in graph.nodes or target not in graph.nodes:
+        return []
+    idx = 0
+    heap = [(0, idx,graph.nodes[start])]
+    seen = {node : float("inf") for node in graph.nodes}
+    seen[start] = 0
+
+    while heap:
+        cur_distance,idx, cur_node = heapq.heappop(heap)
+        # print(cur_node)
+        if cur_node.val == target:
+            # print(cur_distance)
+            return cur_distance
+
+        for edge in graph.edges[cur_node]:
+            idx += 1
+            nex_node = edge.tail
+            nex_distance = cur_distance + edge.weight
+
+            if nex_distance > seen[nex_node.val]:
+                continue
+            if nex_distance < seen[nex_node.val]:
+                heapq.heappush(heap, (nex_distance,idx,nex_node))
+                seen[nex_node.val] = nex_distance 
+                
+
+    return 0
