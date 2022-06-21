@@ -5,19 +5,16 @@ class Chromosome:
     # boolean value to check whether it has to generate a chromosome or not
     def __init__(self, cities, generate=False) -> None:
         self.genes = [] if not generate else self.generate(cities)
-
     # generates random list with values representing presence or absence of a gene
     def generate(self, cities) -> None:
         li = cities.copy()
         for i in range(len(cities)):
             self.rndmSwap(li)
         return li
-
     def rndmSwap(self, lst) -> None:
         idx1 = random.randint(0, len(lst) - 1)
         idx2 = random.randint(0, len(lst) - 1)
         lst[idx1], lst[idx2] = lst[idx2], lst[idx1]
-
     # accepts list of items available and returns the fitness(total) value of a chromosome
     def fitness(self, graph) -> int:
         value = 0
@@ -44,14 +41,12 @@ class GeneticAlgo:
         self.graph = None
         self.cities = None
         self.population = None
-
     def solve(self, graph) -> None:
         self.graph = graph
         graph.findAllDistances()
         self.cities = list(self.graph.nodes.keys())
         self.population = Population(self.cities)
         self.main()
-
     # returns  the fittest chromosome and its fitness
     def fittest(self) -> tuple:
         fittest = None
@@ -61,15 +56,13 @@ class GeneticAlgo:
                 fitness = min(fitness, chromo.fitness(self.graph))
                 fittest = chromo
         return fitness, fittest
-
-    # returns two possible parents for the next generation
+     # returns two possible parents for the next generation
     def selection(self) -> list:
         idx1 = random.randint(0, self.population.size - 1)
         idx2 = random.randint(0, self.population.size - 1)
         parent1 = self.population.chromosomes[idx1]
         parent2 = self.population.chromosomes[idx2]
         return [parent1, parent2]
-
     # accepts to chromos as parent and generates  new chromo as a child
     def crossover(self, parent1, parent2) -> Chromosome:
         prnt1copy = Chromosome(self.cities)
@@ -93,7 +86,6 @@ class GeneticAlgo:
             return prnt1copy
         else:
             return prnt2copy
-
     # changes a single chromosome from the population based on the mutation rate
     def mutation(self, chromosome) -> None:
         temp = random.randint(0, 100)
@@ -104,9 +96,6 @@ class GeneticAlgo:
         idx1 = random.randint(0 , len(lst) - 1)
         idx2 = random.randint(0 , len(lst) - 1)
         lst[idx1] , lst[idx2] = lst[idx2] , lst[idx1]
-    def solution(self)  -> dict:
-        pass
-
     def main(self) -> None:
         best = float('inf')
         generationNo = 1
