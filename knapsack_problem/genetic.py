@@ -8,10 +8,10 @@ class Chromosome:
         self.genes = [] if not generate else self.generate()
         
     #generates random list with values representig presence or absence of a gene
-    def generate(self) -> int:
+    def generate(self) -> list:
         li = [random.randint(0,3) for i in range(self.size)] 
         return li
-
+        
     # accepts list of items availabe and returns the fitness(total) value of a chromo
     def fitness(self,items,capacity) -> int:
         fitness = 0
