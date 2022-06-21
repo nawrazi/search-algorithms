@@ -1,8 +1,12 @@
+import heapq
 from collections import defaultdict
 
 class Node:
     def __init__(self, val):
         self.val = val
+
+    def __lt__(self, other):
+        return self.val < other.val
 
 class Edge:
     def __init__(self, head, tail, weight, directed=False):
@@ -15,6 +19,7 @@ class Graph:
     def __init__(self, path):
         self.nodes = {}
         self.edges = defaultdict(list)
+        self.all_distances = {}
 
         self.buildGraphFromFile(path)
 
@@ -45,3 +50,30 @@ class Graph:
             self.addEdge(Edge(Node(node1), Node(node2), int(weight)))
 
         file.close()
+
+    def findAllDistances(self):
+        def dijkstra(start, target):
+            heap = [(0, self.nodes[start])]
+            seen = {node: float("inf") for node in self.nodes}
+            seen[start] = 0
+
+            while heap:
+                cur_distance, cur_node = heapq.heappop(heap)
+                if cur_node.val == target:
+                    return cur_distance
+
+                for edge in self.edges[cur_node]:
+                    nex_node = edge.tail
+                    nex_distance = cur_distance + edge.weight
+
+                    if nex_distance > seen[nex_node.val]:
+                        continue
+                    if nex_distance < seen[nex_node.val]:
+                        heapq.heappush(heap, (nex_distance, nex_node))
+                        seen[nex_node.val] = nex_distance
+
+        for start_node in self.nodes:
+            for target_node in self.nodes:
+                if start_node == target_node or (target_node, start_node) in self.all_distances:
+                    continue
+                self.all_distances[(start_node, target_node)] = dijkstra(start_node, target_node)
