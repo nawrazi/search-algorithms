@@ -55,7 +55,6 @@ class SimulatedAnnealing:
         self.all_items = all_items
         self.sack_capacity = sack_capacity
         # self.simulate()
-
         for _ in range(1000):
             self.simulate()
             self.optimum_value = max(self.cur_value, self.optimum_value)
