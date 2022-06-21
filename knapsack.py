@@ -2,7 +2,6 @@ import argparse
 from knapsack_problem.simulated_annealing import *
 from knapsack_problem.genetic import *
 from knapsack_problem.util import *
-from travelling_salesman.genetic import GeneticAlgo
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -13,7 +12,7 @@ if __name__ == '__main__':
 
     if args.algorithm == 'ga':
         print('Solving with Genetic Algorithm...')
-        solution = GeneticAlgo().solve(items, capacity)
+        GeneticAlgo().solve(items, capacity)
 
     elif args.algorithm == 'hc':
         print('Solving with Hill Climbing Algorithm...')
@@ -21,7 +20,7 @@ if __name__ == '__main__':
 
     elif args.algorithm == 'sa':
         print('Solving with Simulated Annealing Algorithm...')
-        solution = SimulatedAnnealing().solve(capacity, items)
+        SimulatedAnnealing().solve(capacity, items)
 
     else:
         raise Exception(f'Invalid Algorithm: {args.algorithm}')
