@@ -3,6 +3,9 @@ from collections import defaultdict
 class Node:
     def __init__(self, val):
         self.val = val
+        
+    def __lt__(self, anotherone):
+        return self.val < anotherone.val
 
 class Edge:
     def __init__(self, head, tail, weight, directed=False):
