@@ -1,8 +1,19 @@
-190
+165
 item    , weight, value
-Chicken , 56    , 50
-Salad   , 59    , 50
-Hat     , 80    , 64
-Computer, 64    , 46
-Pants   , 75    , 50
-Car     , 17    , 5
+Table   , 23    , 1000
+Computer, 31    , 57
+Chips   , 29    , 49
+Keyboard, 44    , 68
+Fish    , 53    , 60
+Pants   , 38    , 43
+Towels  , 63    , 67
+Gloves  , 85    , 84
+Mouse   , 89    , 87
+Car     , 82    , 72
+chair   , 44    , 68
+trouser , 34    , 78
+t-shirt , 35    , 65
+pen     , 20    , 55
+pencil  , 29    , 60
+basket  , 40    , 65
+water   , 26    , 50

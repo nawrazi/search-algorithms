@@ -10,3 +10,8 @@ Towels  , 63    , 67
 Gloves  , 85    , 84
 Mouse   , 89    , 87
 Car     , 82    , 72
+chair   , 44    , 68
+trouser , 34    , 78
+t-shirt , 35    , 65
+pen     , 20    , 55
+pencil  , 29    , 60

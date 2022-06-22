@@ -1,7 +1,17 @@
-26
+165
 item    , weight, value
-Keyboard, 12    , 24
-Towels  , 7     , 13
-Monitor, 11    , 23
-Salad   , 8     , 15
-Hat     , 9     , 16
+Table   , 23    , 1000
+Computer, 31    , 57
+Chips   , 29    , 49
+Keyboard, 44    , 68
+Fish    , 53    , 60
+Pants   , 38    , 43
+Towels  , 63    , 67
+Gloves  , 85    , 84
+Mouse   , 89    , 87
+Car     , 82    , 72
+chair   , 44    , 68
+trouser , 34    , 78
+t-shirt , 35    , 65
+pen     , 20    , 55
+pencil  , 29    , 60
