@@ -46,13 +46,13 @@ class GeneticAlgo:
         self.population = None
         self.popSize = 100
 
-    def solve(self, graph , popSize = 100) -> None:
+    def solve(self, graph , gen = 1000, popSize = 100) -> None:
         self.graph = graph
         graph.findAllDistances()
         self.popSize = popSize
         self.cities = list(self.graph.nodes.keys())
         self.population = Population(self.cities , popSize)
-        self.main()
+        self.main(gen)
     
     # returns  the fittest chromosome and its fitness
     def fittest(self) -> tuple:
@@ -108,20 +108,19 @@ class GeneticAlgo:
             for i in range(len(chromosome.genes)//4):
                rndmSwap(chromosome.genes)
      
-    def main(self) -> tuple:
+    def main(self ,gen) -> tuple:
         generationNo = 1
-        for i in range(200):
+        for i in range(gen):
             for k in range(len(self.population.chromosomes)):
                 parent1, parent2 = self.selection()
                 offspring = self.crossover(parent1=parent1, parent2=parent2)
                 self.mutation(offspring)
                 self.population.chromosomes[k] = offspring
             fittest = self.fittest()
-            # print("generation" , generationNo , "value" , fittest[0])
             self.best = (fittest[0] , fittest[1]) if fittest[0] < self.best[0] else self.best
-            # print("Generation :",generationNo , "optimal Solution ====> " , fittest[0])
+       
             generationNo += 1
         print(f"Optimal Path: {' -> '.join(self.best[1].genes)}")
         print(f'Shortest Distance: {self.best[0]}')
  
-        return self.best[1].genes
+        return self.best
