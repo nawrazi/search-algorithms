@@ -3,6 +3,9 @@ from random import randint
 from random import choice
 from pygame import init
 from util import *
+from matplotlib.pyplot import figure
+import matplotlib.pyplot as plt
+
      
      
 class knapsack:
@@ -27,12 +30,12 @@ class knapsack:
         return sack
 
 
-    def getAllNeighbour(self, current_thing):
+    def getAllNeighbour(self, current_val_thing):
 
         list_neighbour = []
 
         for i in range(len(self.cur_sack)):
-            new_sack = current_thing.copy()
+            new_sack = current_val_thing.copy()
             if self.cur_sack[i] + 1 > 3:
                 continue
             new_sack[i] = choice(list({j for j in range(1,4)}.difference({new_sack[i]})))
@@ -85,6 +88,7 @@ class knapsack:
         return self.cur_value, sack
 
     def solve(self, sack_capacity, all_items):
+        final_list_items = {}
 
         self.all_items = all_items
         self.sack_capacity = sack_capacity
@@ -92,12 +96,15 @@ class knapsack:
         best_value, list_of_items = self.hillClimbing()
         self.optimum_value = max(self.cur_value, self.optimum_value)
         self.optimum_weight = max(self.cur_weight, self.optimum_weight)
+        for i in range(len(all_items)):
+            final_list_items[all_items[i].name] = list_of_items[i]
+
 
         # print(f'Selections: {list_of_items}')
         # print(f'Sack value: {self.optimum_value}')
         # print(f'Sack weight: {self.optimum_weight}')
 
-        return self.optimum_value, list_of_items
+        return self.optimum_value, final_list_items
 
 
 reade = FileUtil()
@@ -107,12 +114,29 @@ print("------------------------")
 
 obj = knapsack()
 mina = float('-inf')
-best_item_selection = []
+best_item_selection = {}
 for i in range(10):
-    current, list_of_items = obj.solve(capacity, items)
-    print(f'the best value {current}  the best path {list_of_items}')
-    if current > mina:
-        mina = current
+    current_val, list_of_items = obj.solve(capacity, items)
+    print(f'the best value {current_val}  the best path {list_of_items}')
+    if current_val > mina:
+        mina = current_val
         best_item_selection = list_of_items
 
 print(f'the final  best value {mina}  the final best path {best_item_selection}')
+
+
+item_list = list()
+item_value = list()
+for item in best_item_selection:
+    item_list.append(item)
+    item_value.append(best_item_selection[item])
+
+
+print(item_list)
+print(item_value)
+
+plt.bar(item_list, item_value, color = "brown")
+plt.xlabel("items")
+plt.ylabel("value ")
+plt.title('knapsack with Hill Climbing')
+plt.show()
