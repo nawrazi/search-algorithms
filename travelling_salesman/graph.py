@@ -21,7 +21,6 @@ class Graph:
         self.nodes = {}
         self.edges = defaultdict(list)
         self.all_distances = {}
-
         self.buildGraphFromFile(path)
 
     def addNode(self, node):

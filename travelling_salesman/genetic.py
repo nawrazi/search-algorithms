@@ -1,20 +1,23 @@
+from operator import indexOf
 import random
 
 class Chromosome:
-    # accepts size of chromosome and 
+    # accepts items to be included in a chromosome and 
     # boolean value to check whether it has to generate a chromosome or not
     def __init__(self, cities, generate=False) -> None:
         self.genes = [] if not generate else self.generate(cities)
+   
     # generates random list with values representing presence or absence of a gene
     def generate(self, cities) -> None:
+        def rndmSwap(lst) -> None:
+            idx1 = random.randint(0, len(lst) - 1)
+            idx2 = random.randint(0, len(lst) - 1)
+            lst[idx1], lst[idx2] = lst[idx2], lst[idx1]
+        
         li = cities.copy()
-        for i in range(len(cities)):
-            self.rndmSwap(li)
+        random.shuffle(li)
         return li
-    def rndmSwap(self, lst) -> None:
-        idx1 = random.randint(0, len(lst) - 1)
-        idx2 = random.randint(0, len(lst) - 1)
-        lst[idx1], lst[idx2] = lst[idx2], lst[idx1]
+
     # accepts list of items available and returns the fitness(total) value of a chromosome
     def fitness(self, graph) -> int:
         value = 0
@@ -29,14 +32,14 @@ class Chromosome:
 
 class Population:
     # contains chromosomes
-    def __init__(self, cities, size=6) -> None:
+    def __init__(self, cities, size=100) -> None:
         self.size = size
         self.chromosomes = [Chromosome(cities, True) for i in range(self.size)]
 
 
 class GeneticAlgo:
     def __init__(self) -> None:
-        self.mutationPerc = 70
+        self.mutationPerc = 10
         self.best = (float('inf'), None)
         self.graph = None
         self.cities = None
@@ -47,6 +50,7 @@ class GeneticAlgo:
         self.cities = list(self.graph.nodes.keys())
         self.population = Population(self.cities)
         self.main()
+    
     # returns  the fittest chromosome and its fitness
     def fittest(self) -> tuple:
         fittest = None
@@ -56,6 +60,7 @@ class GeneticAlgo:
                 fitness = min(fitness, chromo.fitness(self.graph))
                 fittest = chromo
         return fitness, fittest
+     
      # returns two possible parents for the next generation
     def selection(self) -> list:
         idx1 = random.randint(0, self.population.size - 1)
@@ -63,53 +68,59 @@ class GeneticAlgo:
         parent1 = self.population.chromosomes[idx1]
         parent2 = self.population.chromosomes[idx2]
         return [parent1, parent2]
+   
     # accepts to chromos as parent and generates  new chromo as a child
     def crossover(self, parent1, parent2) -> Chromosome:
+
         prnt1copy = Chromosome(self.cities)
         prnt2copy = Chromosome(self.cities)
         prnt1copy.genes = parent1.genes.copy()
         prnt2copy.genes = parent2.genes.copy()
-        crpnt1 = random.randint(0 , len(parent1.genes))
-        segment1 = [parent1.genes[i] for i in range(crpnt1 , len(parent1.genes))]
-        segment2 = [parent2.genes[i] for i in range(crpnt1 , len(parent2.genes))]
-        segment1.reverse()
-        segment2.reverse()
-        for i in range(crpnt1 , len(parent1.genes)):
-            prnt2copy.genes.remove(parent1.genes[i])
-        for i in range(len(segment1)):
-            prnt2copy.genes.append(segment1[i])
-        for i in range(crpnt1 , len(parent2.genes)):
-            prnt1copy.genes.remove(parent2.genes[i])
-        for i in range(len(segment2) ):
-            prnt1copy.genes.append(segment2[i])
+        leng = len(parent1.genes) // 2
+
+        for i in range(leng):
+            temp = parent2.genes[i]
+            idx = prnt1copy.genes.index(temp)
+            prnt1copy.genes[idx] , prnt1copy.genes[i] = prnt1copy.genes[i] , prnt1copy.genes[idx]
+        for i in range(leng):
+            temp = parent1.genes[i]
+            idx = prnt2copy.genes.index(temp)
+            prnt2copy.genes[idx] , prnt2copy.genes[i] = prnt2copy.genes[i] , prnt2copy.genes[idx]
+
         if prnt1copy.fitness(self.graph) <= prnt2copy.fitness(self.graph):
             return prnt1copy
         else:
             return prnt2copy
+    
     # changes a single chromosome from the population based on the mutation rate
     def mutation(self, chromosome) -> None:
+
+        def rndmSwap(lst) -> None:
+            idx1 = random.randint(0 , len(lst) - 1)
+            idx2 = random.randint(0 , len(lst) - 1)
+            lst[idx1] , lst[idx2] = lst[idx2] , lst[idx1]
+
         temp = random.randint(0, 100)
         if temp <= self.mutationPerc:
             for i in range(len(chromosome.genes)//4):
-                self.rndmSwap(chromosome.genes)
-    def rndmSwap(self , lst) -> None:
-        idx1 = random.randint(0 , len(lst) - 1)
-        idx2 = random.randint(0 , len(lst) - 1)
-        lst[idx1] , lst[idx2] = lst[idx2] , lst[idx1]
-    def main(self) -> None:
-        best = float('inf')
+               rndmSwap(chromosome.genes)
+     
+    def main(self) -> tuple:
         generationNo = 1
-        for i in range(2000000):
+        for i in range(200):
             for k in range(len(self.population.chromosomes)):
                 parent1, parent2 = self.selection()
                 offspring = self.crossover(parent1=parent1, parent2=parent2)
                 self.mutation(offspring)
                 self.population.chromosomes[k] = offspring
             fittest = self.fittest()
+            # print("generation" , generationNo , "value" , fittest[0])
             self.best = (fittest[0] , fittest[1]) if fittest[0] < self.best[0] else self.best
             # print("Generation :",generationNo , "optimal Solution ====> " , fittest[0])
             generationNo += 1
-        print("value =====> " , self.best[0])
-        print("best =====> " , self.best[1].genes , )   
+        print(f"Optimal Path: {' -> '.join(self.best[1].genes)}")
+        print(f'Shortest Distance: {self.best[0]}')
+ 
+        return self.best 
 
     
