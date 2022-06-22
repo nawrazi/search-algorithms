@@ -1,4 +1,4 @@
-from operator import indexOf
+
 import random
 
 class Chromosome:
@@ -23,8 +23,8 @@ class Chromosome:
         value = 0
         leng = len(self.genes)
         for i in range(len(self.genes)):
-            if (self.genes[i % leng] , self.genes[(i + 1) % leng]) in graph.all_distances:
-                value += graph.all_distances[(self.genes[(i) % leng] , self.genes[(i + 1) % leng])]
+            if (self.genes[i % leng], self.genes[(i + 1) % leng]) in graph.all_distances:
+                value += graph.all_distances[(self.genes[(i) % leng], self.genes[(i + 1) % leng])]
             else:
                 value += graph.all_distances[(self.genes[(i + 1) % leng], self.genes[(i) % leng])]
         return value
@@ -44,11 +44,14 @@ class GeneticAlgo:
         self.graph = None
         self.cities = None
         self.population = None
-    def solve(self, graph) -> None:
+        self.popSize = 100
+
+    def solve(self, graph , popSize = 100) -> None:
         self.graph = graph
         graph.findAllDistances()
+        self.popSize = popSize
         self.cities = list(self.graph.nodes.keys())
-        self.population = Population(self.cities)
+        self.population = Population(self.cities , popSize)
         self.main()
     
     # returns  the fittest chromosome and its fitness
@@ -121,6 +124,4 @@ class GeneticAlgo:
         print(f"Optimal Path: {' -> '.join(self.best[1].genes)}")
         print(f'Shortest Distance: {self.best[0]}')
  
-        return self.best 
-
-    
+        return self.best[1].genes

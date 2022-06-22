@@ -5,6 +5,9 @@ import heapq
 class Node:
     def __init__(self, val):
         self.val = val
+        
+    def __lt__(self, anotherone):
+        return self.val < anotherone.val
 
     def __lt__(self, other):
         return self.val < other.val

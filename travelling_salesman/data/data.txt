@@ -1,0 +1,12 @@
+50
+item,weight,value
+item1,3.2,562
+item2,1.2,912
+item3,1.0,799
+item4,1.6,98
+item5,0.4,950
+item6,3.1,108
+item7,1.4,699
+item8,2.5,521
+item9,1.8,854
+item10,1.8,466
