@@ -107,7 +107,7 @@ class GeneticAlgo:
             solution[item] = self.best[1].genes[i]
         return solution
 
-    def main(self) -> None:
+    def main(self) -> dict:
 
         generationNo = 1
         for i in range(2000):
@@ -117,9 +117,11 @@ class GeneticAlgo:
                 self.mutation(offspring)
                 self.population.chromosomes[k] = offspring
             fittest = self.fittest()
+            solution = self.solution()
             self.best = (fittest[0], fittest[1]) if fittest[0] > self.best[0] else self.best
 
             generationNo += 1
 
-        print("Solution ====>", self.solution())
+        print("Solution ====>", solution)
         print("Value    ====>", self.best[0])
+        return solution

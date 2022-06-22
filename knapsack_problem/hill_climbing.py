@@ -65,27 +65,31 @@ class HillClimbing:
                     self.cur_value = next_val
                     self.cur_weight = next_weight
 
-                    self.optimum_value = max(self.cur_value, self.optimum_value)
-                    self.optimum_weight = max(self.cur_weight, self.optimum_weight)
-
             if la == 0:
                 return self.cur_value, sack
 
         return self.cur_value, sack
 
     def solve(self, sack_capacity, all_items):
-
         self.all_items = all_items
         self.sack_capacity = sack_capacity
+        solution = {}
 
         for _ in range(10):
             best_value, list_of_items = self.hillClimbing()
-
+            
             if best_value >= self.optimum_value:
                 self.optimum_value = best_value
                 self.optimum_sack = list_of_items
 
+        for i in range(len(all_items)):
+            solution[all_items[i].name] = self.optimum_sack[i]
+
         print(f'Selections: {self.optimum_sack}')
         print(f'Sack value: {self.optimum_value}')
+        print(f'the is the dictionary to store all them items with value :  {solution}')
 
-        return self.optimum_value
+        return solution
+
+
+

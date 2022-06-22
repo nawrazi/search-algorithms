@@ -54,14 +54,22 @@ class SimulatedAnnealing:
     def solve(self, sack_capacity, all_items):
         self.all_items = all_items
         self.sack_capacity = sack_capacity
+        solution = {}
 
         for _ in range(1000):
             self.simulate()
             self.optimum_value = max(self.cur_value, self.optimum_value)
             self.optimum_weight = max(self.cur_weight, self.optimum_weight)
 
+
+        for i in range(len(all_items)):
+            solution[all_items[i].name] = self.cur_sack[i]
+        
+
+        
         print(f'Selections: {self.cur_sack}')
         print(f'Sack value: {self.optimum_value}')
         print(f'Sack weight: {self.optimum_weight}')
+        print(f'Sack solution: {solution}')
 
-        return self.optimum_value
+        return solution

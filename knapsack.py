@@ -3,6 +3,7 @@ from knapsack_problem.simulated_annealing import *
 from knapsack_problem.genetic import *
 from knapsack_problem.hill_climbing import *
 from knapsack_problem.util import *
+from graph_plotter import plot_graph
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -14,15 +15,18 @@ if __name__ == '__main__':
 
     if args.algorithm == 'ga':
         print('Solving with Genetic Algorithm...')
-        GeneticAlgo().solve(capacity, items)
+        solution = GeneticAlgo().solve(capacity, items)
 
     elif args.algorithm == 'hc':
         print('Solving with Hill Climbing Algorithm...')
-        HillClimbing().solve(capacity, items)
+        solution = HillClimbing().solve(capacity, items)
+        plot_graph(solution)
 
     elif args.algorithm == 'sa':
         print('Solving with Simulated Annealing Algorithm...')
-        SimulatedAnnealing().solve(capacity, items)
+        solution = SimulatedAnnealing().solve(capacity, items)
+        plot_graph(solution)
+
 
     else:
         raise Exception(f'Invalid Algorithm: {args.algorithm}')
