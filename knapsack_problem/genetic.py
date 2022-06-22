@@ -107,7 +107,7 @@ class GeneticAlgo:
             solution[item] = self.best[1].genes[i]
         return solution
 
-    def main(self) -> None:
+    def main(self) -> dict:
 
         generationNo = 1
         for i in range(2000):
@@ -124,3 +124,4 @@ class GeneticAlgo:
 
         print("Solution ====>", solution)
         print("Value    ====>", self.best[0])
+        return solution
