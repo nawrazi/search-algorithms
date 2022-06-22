@@ -38,7 +38,7 @@ class GeneticAlgo:
         self.population = None
         self.best = None
 
-    def solve(self, items, capacity):
+    def solve(self, capacity, items):
         self.capacity = capacity
         self.items = items
         self.population = Population(len(self.items), 6)
