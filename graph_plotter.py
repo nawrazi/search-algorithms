@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 
 
-def plot_graph(solution):
+def plot_graph(solution, name):
     
     item_list = list()
     item_value = list()
@@ -13,9 +13,9 @@ def plot_graph(solution):
 
     print(item_list)
     print(item_value)
-
-    plt.bar(item_list, item_value, color = "brown")
+    plt.rcParams['figure.figsize'] = (8, 5)
+    plt.bar(item_list, item_value,width=0.5, color = "black")
     plt.xlabel("items")
     plt.ylabel("value ")
-    plt.title('knapsack with Hill Climbing')
+    plt.title(f'knapsack with {name}')
     plt.show()

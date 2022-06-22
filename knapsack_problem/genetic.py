@@ -53,7 +53,11 @@ class GeneticAlgo:
             if self.population.chromosomes[i].fitness(self.items, self.capacity) > fitness:
                 fitness = self.population.chromosomes[i].fitness(self.items, self.capacity)
                 fittest = self.population.chromosomes[i]
-        return fitness, fittest
+        print(self.best[1])
+        print("fittest",fittest)
+        self.best = (fitness , fittest) if fitness > self.best[0] else self.best
+        print(self.best[1])
+        return (fitness, fittest)
 
     # returns two possible parents for the next generation
     def selection(self) -> list:
@@ -103,7 +107,7 @@ class GeneticAlgo:
     def solution(self) -> dict:
         solution = {}
         for i in range(len(self.items)):
-            item = self.items[i].name.strip()
+            item = self.items[i].name
             solution[item] = self.best[1].genes[i]
         return solution
 
@@ -116,9 +120,10 @@ class GeneticAlgo:
                 offspring = self.crossover(parent1=parent1, parent2=parent2)
                 self.mutation(offspring)
                 self.population.chromosomes[k] = offspring
+            # print(self.best[1])
             fittest = self.fittest()
-            solution =  self.solution()
             self.best = (fittest[0], fittest[1]) if fittest[0] > self.best[0] else self.best
+            solution =  self.solution()
 
             generationNo += 1
 
