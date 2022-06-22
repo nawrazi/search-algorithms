@@ -117,11 +117,11 @@ class GeneticAlgo:
                 self.mutation(offspring)
                 self.population.chromosomes[k] = offspring
             fittest = self.fittest()
-            solution = self.solution()
+            # solution = self.solution()
             self.best = (fittest[0], fittest[1]) if fittest[0] > self.best[0] else self.best
 
             generationNo += 1
 
-        print("Solution ====>", solution)
+        print("Solution ====>", self.best[1].genes)
         print("Value    ====>", self.best[0])
-        return solution
+        # return solution

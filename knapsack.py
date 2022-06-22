@@ -16,7 +16,7 @@ if __name__ == '__main__':
     if args.algorithm == 'ga':
         print('Solving with Genetic Algorithm...')
         solution = GeneticAlgo().solve(capacity, items)
-
+        # plot_graph(solution)
     elif args.algorithm == 'hc':
         print('Solving with Hill Climbing Algorithm...')
         solution = HillClimbing().solve(capacity, items)
