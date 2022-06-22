@@ -1,0 +1,9 @@
+Oradea     Zerind     71
+Zerind     Arad     75
+Oradea     Sibiu     151
+Arad     Sibiu     140
+Rimnicu-Vilcea     Sibiu     80
+Fagaras     Sibiu     99
+Pitesti     Rimnicu-Vilcea     97
+Pitesti     Bucharest     101
+Bucharest     Fagaras       211
