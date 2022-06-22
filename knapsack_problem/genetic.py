@@ -6,7 +6,7 @@ class Chromosome:
     # boolean value to check whether it has to generate a chromosome or not
     def __init__(self, size, generate=False) -> None:
         self.size = size
-        self.genes = [] if not generate else self.generate()
+        self.genes = [0] * size if not generate else self.generate()
 
     # generates random list with values representing presence or absence of a gene
     def generate(self) -> list:
@@ -38,12 +38,12 @@ class GeneticAlgo:
         self.population = None
         self.best = None
 
-    def solve(self, capacity, items):
+    def solve(self, capacity, items) -> dict:
         self.capacity = capacity
         self.items = items
         self.population = Population(len(self.items), 6)
-        self.best = (0, None)
-        self.main()
+        self.best = (0 , Chromosome(len(self.items)))
+        return self.main()
 
     # returns  the fittest chromosome and its fitness
     def fittest(self) -> tuple:
@@ -53,10 +53,8 @@ class GeneticAlgo:
             if self.population.chromosomes[i].fitness(self.items, self.capacity) > fitness:
                 fitness = self.population.chromosomes[i].fitness(self.items, self.capacity)
                 fittest = self.population.chromosomes[i]
-        print(self.best[1])
-        print("fittest",fittest)
         self.best = (fitness , fittest) if fitness > self.best[0] else self.best
-        print(self.best[1])
+       
         return (fitness, fittest)
 
     # returns two possible parents for the next generation
