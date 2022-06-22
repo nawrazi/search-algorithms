@@ -1,5 +1,7 @@
 import argparse
 from knapsack_problem.simulated_annealing import *
+from knapsack_problem.genetic import *
+from knapsack_problem.hill_climbing import *
 from knapsack_problem.util import *
 
 if __name__ == '__main__':
@@ -12,15 +14,15 @@ if __name__ == '__main__':
 
     if args.algorithm == 'ga':
         print('Solving with Genetic Algorithm...')
-        print('GENETIC ALGORITHM NOT IMPLEMENTED YET')
+        GeneticAlgo().solve(capacity, items)
 
     elif args.algorithm == 'hc':
         print('Solving with Hill Climbing Algorithm...')
-        print('HILL CLIMBING NOT IMPLEMENTED YET')
+        HillClimbing().solve(capacity, items)
 
     elif args.algorithm == 'sa':
         print('Solving with Simulated Annealing Algorithm...')
-        solution = SimulatedAnnealing().solve(capacity, items)
+        SimulatedAnnealing().solve(capacity, items)
 
     else:
         raise Exception(f'Invalid Algorithm: {args.algorithm}')

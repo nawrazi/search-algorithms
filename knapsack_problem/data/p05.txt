@@ -1,0 +1,10 @@
+104
+item   , weight, value
+Chicken, 25    , 350
+Shoes  , 35    , 400
+Ball   , 45    , 450
+Tuna   , 5     , 20
+Mouse  , 25    , 70
+Table  , 3     , 8
+Salad  , 2     , 5
+Soap   , 2     , 5
