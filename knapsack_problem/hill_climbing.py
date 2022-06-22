@@ -83,11 +83,10 @@ class HillClimbing:
                 self.optimum_sack = list_of_items
 
         for i in range(len(all_items)):
-            solution[all_items[i].name] = self.optimum_sack[i]
+            solution[all_items[i].name.strip()] = self.optimum_sack[i]
 
-        print(f'Selections: {self.optimum_sack}')
+        print(f'Selections: {solution}')
         print(f'Sack value: {self.optimum_value}')
-        print(f'the is the dictionary to store all them items with value :  {solution}')
 
         return solution
 

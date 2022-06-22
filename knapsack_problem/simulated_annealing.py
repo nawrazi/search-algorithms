@@ -26,15 +26,23 @@ class SimulatedAnnealing:
 
     def getRandomSolution(self):
         sack = self.cur_sack.copy()
-        idx = random.randint(0, len(self.cur_sack) - 1)
-        sack[idx] = random.choice(
-            list({i for i in range(4)}.difference({sack[idx]}))
+        idx1 = random.randint(0, len(self.cur_sack) - 1)
+        idx2 = random.randint(0, len(self.cur_sack) - 1)
+        sack[idx1] = random.choice(
+            list({i for i in range(4)}.difference({sack[idx1]}))
+        )
+        sack[idx2] = random.choice(
+            list({i for i in range(4)}.difference({sack[idx2]}))
         )
         return sack
 
     def simulate(self):
-        self.cur_sack = [1 for _ in range(len(self.all_items))]
-        self.cur_value, self.cur_weight = self.getValue(self.cur_sack)
+        if not self.cur_sack:
+            self.cur_sack = [0 for _ in range(len(self.all_items))]
+            for i in range(len(self.cur_sack)):
+                if self.cur_sack[i] % 3:
+                    self.cur_sack[i] = 1
+            self.cur_value, self.cur_weight = self.getValue(self.cur_sack)
 
         for i in range(100):
             next_sack = self.getRandomSolution()
@@ -54,22 +62,18 @@ class SimulatedAnnealing:
     def solve(self, sack_capacity, all_items):
         self.all_items = all_items
         self.sack_capacity = sack_capacity
-        solution = {}
 
         for _ in range(1000):
             self.simulate()
             self.optimum_value = max(self.cur_value, self.optimum_value)
             self.optimum_weight = max(self.cur_weight, self.optimum_weight)
 
+        if not self.optimum_value:
+            self.optimum_value, _ = self.getValue(self.cur_sack)
 
-        for i in range(len(all_items)):
-            solution[all_items[i].name] = self.cur_sack[i]
-        
+        solution = {self.all_items[i].name.strip(): self.cur_sack[i] for i in range(len(self.all_items))}
 
-        
-        print(f'Selections: {self.cur_sack}')
+        print(f'Selections: {solution}')
         print(f'Sack value: {self.optimum_value}')
-        print(f'Sack weight: {self.optimum_weight}')
-        print(f'Sack solution: {solution}')
 
-        return solution
+        return self.optimum_value

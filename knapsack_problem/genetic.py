@@ -102,13 +102,6 @@ class GeneticAlgo:
                 else:
                     chromosome.genes[mutPoint] -= 1
 
-    def solution(self) -> dict:
-        solution = {}
-        for i in range(len(self.items)):
-            item = self.items[i].name
-            solution[item] = self.best[1].genes[i]
-        return solution
-
     def main(self) -> dict:
 
         generationNo = 1
@@ -118,12 +111,12 @@ class GeneticAlgo:
                 offspring = self.crossover(parent1=parent1, parent2=parent2)
                 self.mutation(offspring)
                 self.population.chromosomes[k] = offspring
-            # print(self.best[1])
+
             fittest = self.fittest()
             self.best = (fittest[0], fittest[1]) if fittest[0] > self.best[0] else self.best
-            solution =  self.solution()
-
             generationNo += 1
+
+        solution = {self.items[i].name.strip(): self.best[1].genes[i] for i in range(len(self.items))}
 
         print("Solution ====>", solution)
         print("Value    ====>", self.best[0])
