@@ -9,6 +9,7 @@ if __name__ == '__main__':
     parser.add_argument('--algorithm', type=str, required=True)
     parser.add_argument('--file', type=str, required=True)
     args = parser.parse_args()
+
     capacity, items = FileUtil.readFile(args.file)
 
     if args.algorithm == 'ga':
